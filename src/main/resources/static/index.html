@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Liste</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h1>Task Liste</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Titel</th>
+        <th>Beschreibung</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody id="taskList">
+    <!-- Aufgaben werden hier dynamisch eingefügt -->
+    </tbody>
+</table>
+
+<script>
+    async function loadTasks() {
+        const response = await fetch('http://localhost:8080/tasks'); // Passe die URL an, falls nötig
+        const tasks = await response.json(); // Erwartet eine JSON-Antwort
+
+        const taskList = document.getElementById('taskList');
+        taskList.innerHTML = ''; // Leere den Tabellenkörper
+
+        // Füge die Tasks in die Tabelle ein
+        tasks.forEach(task => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                    <td>${task.id}</td>
+                    <td>${task.title}</td>
+                    <td>${task.description}</td>
+                    <td>${task.status}</td>
+                `;
+            taskList.appendChild(row);
+        });
+    }
+
+    // Lade die Tasks, wenn die Seite geladen wird
+    window.onload = loadTasks;
+</script>
+</body>
+</html>
