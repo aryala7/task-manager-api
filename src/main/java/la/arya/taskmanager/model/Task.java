@@ -10,6 +10,16 @@ import lombok.Setter;
 @Entity
 @Table(name="TASK")
 public class Task {
+
+    public Task() {
+
+    }
+    public Task(Long id,String title,String Description,Status status) {
+        this.id = id;
+        this.title = title;
+        this.description = Description;
+        this.status = status;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,6 +30,7 @@ public class Task {
     private String description;
 
 
+    @Enumerated(EnumType.ORDINAL)
     private Status status = Status.OPEN;
 
 
