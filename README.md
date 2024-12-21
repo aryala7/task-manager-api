@@ -1,7 +1,3 @@
-Here’s a **README.md** template for your **Task Manager API** project:
-
----
-
 # Task Manager API
 
 This is a simple **RESTful API** built with **Spring Boot** to manage tasks. It supports basic **CRUD operations** for tasks, including the ability to filter tasks by status (e.g., "Open", "In Progress", "Done").
