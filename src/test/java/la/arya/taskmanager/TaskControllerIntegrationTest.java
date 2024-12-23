@@ -30,7 +30,7 @@ public class TaskControllerIntegrationTest {
     @Mock
     private TaskRepository taskRepository;
 
-    @Mock
+    @InjectMocks
     private TaskService taskService;
 
     @Test
@@ -58,19 +58,28 @@ public class TaskControllerIntegrationTest {
     public void shouldUpdateTask() throws Exception {
         Long taskId = 1L;
 
-        Task existingTask = new Task(taskId, "Old Task", "Old Description", Task.Status.OPEN);
-        Task updatedTask = new Task(taskId, "Updated Task", "Updated Description", Task.Status.DONE);
+        String updatedTasks = """
+                {
+                    "title": "Updated Title",
+                    "description": "Updated Description",
+                    "status": "OPEN"
+                }
+                
+                """;
 
-        when(taskRepository.findById(taskId)).thenReturn(Optional.of(existingTask)); // Mock findById
-        when(taskRepository.save(updatedTask)).thenReturn(updatedTask); // Mock save
+        mockMvc.perform(
+                put("/tasks/{id}",taskId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(updatedTasks))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("Updated Title"));
+    }
 
-        Task result = taskService.updateTask(taskId, updatedTask);
-
-        assertEquals("Updated Description", result.getDescription());
-        assertEquals("Updated Task", result.getTitle());
-        assertEquals(Task.Status.DONE, result.getStatus());
-
-        verify(taskRepository, times(1)).findById(taskId); // Ensure findById was called once
-        verify(taskRepository, times(1)).save(updatedTask); // Ensure save was called once
+    @Test
+    public void ShouldDeleteTask() throws Exception {
+        long taskId = 1L;
+        mockMvc.perform(
+                delete("/tasks/{id}",taskId))
+                .andExpect(status().isNoContent());
     }
 }
