@@ -1,6 +1,5 @@
 package la.arya.taskmanager;
 
-import la.arya.taskmanager.model.Task;
 import la.arya.taskmanager.repository.TaskRepository;
 import la.arya.taskmanager.service.TaskService;
 import org.junit.jupiter.api.Test;
@@ -9,15 +8,8 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;  // For HTTP methods
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
